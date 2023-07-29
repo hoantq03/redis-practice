@@ -2,15 +2,15 @@ import 'dotenv/config';
 import { client } from '../src/services/redis';
 
 const run = async () => {
-	await client.hSet('car', {
-		color: 'red',
-		year: 1950
+	await client.set('hoan', 'hien');
+	await client.set('hoan1', 'hien');
+	await client.set('hoan2', 'hien');
+
+	const command = [3].map((id) => {
+		return client.get(`hoan${id}`);
 	});
-	const car = await client.hGetAll('car');
-	if (Object.keys(car).length === 0) {
-		console.log('Car nout found, respond with 404');
-		return;
-	}
-	console.log(car);
+	const data = await Promise.all(command);
+	if (data[0] === null) console.log('null');
+	console.log(data);
 };
 run();
