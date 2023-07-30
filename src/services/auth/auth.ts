@@ -12,7 +12,6 @@ export const signup = async (username: string, password: string) => {
 
 export const signin = async (username: string, password: string): Promise<string> => {
 	const user = await getUserByUsername(username);
-
 	if (!user) {
 		throw new Error('Username does not exist');
 	}
