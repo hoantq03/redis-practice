@@ -42,7 +42,6 @@ export const createUser = async (attrs: CreateUserAttrs) => {
 		value: attrs.username,
 		score: parseInt(id, 16)
 	});
-
 	return id;
 };
 
