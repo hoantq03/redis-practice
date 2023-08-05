@@ -25,7 +25,7 @@ export const withLock = async (key: string, cb: () => any) => {
 			return result;
 		} finally {
 			// unset the locked key
-			await client.del(lockKey);
+			await client.unlock(lockKey, token);
 		}
 	}
 };
