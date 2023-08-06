@@ -1,5 +1,6 @@
 import { createClient, defineScript } from 'redis';
 import { itemsKey, itemsByViewKey, itemsViewKey } from '$services/keys';
+import { createIndexes } from './create-indexes';
 
 const client = createClient({
 	socket: {
@@ -62,8 +63,14 @@ client.on('connect', async () => {
 	await client.addOneAndStore('books:count', 10);
 	const result = await client.get('books:count');
 });
-
 client.on('error', (err) => console.error(err));
 client.connect();
+client.on('connect', async () => {
+	try {
+		await createIndexes();
+	} catch (err) {
+		console.log(err);
+	}
+});
 
 export { client };
